@@ -1,4 +1,5 @@
+import { ISection } from "../../store/editor-context-provider/types";
+
 export interface IProps {
-    id: string,
-    title?: string,
+    section: ISection,
 }

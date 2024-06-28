@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { EditorContext } from "../../store/editor-context-provider"
+import { EditorContext } from "../../store/editor-context-provider";
 import EditorSection from "../editor-section";
 import * as S from './styles';
 import { memo } from "react";
@@ -10,7 +10,7 @@ const EditorSections = () => {
         <S.RootContainer>
             {editorContext && editorContext.sections && 
                 editorContext.sections.map((section) => (
-                    <EditorSection key={section.id} id={section.id} title={section.title} />
+                    <EditorSection key={section.id} section={section} />
                 ))
             }
             <S.AddSectionContainer onClick={() => editorContext?.AddSection()}>

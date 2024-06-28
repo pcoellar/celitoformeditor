@@ -16,7 +16,7 @@ const EditorBodyRow = (props: IProps) => {
     },[editorContext?.elements, props.id, props.row]);
 
     return (
-        <S.RootContainer>{props.row}
+        <S.RootContainer>
         {
             rowElements?.map((element) => {
                 if (element.type === ElementTypes.Input) {

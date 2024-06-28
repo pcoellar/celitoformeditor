@@ -71,9 +71,9 @@ export default function(props: IEditorContextProviderProps) {
     }
 
     const ChangeSection = (section: ISection) => {
-        let modSection: ISection|undefined = sections.find(x => x.id === section.id);
-        if (modSection) {
-            modSection = {...section};
+        const index = sections.findIndex(x => x.id === section.id);
+        if (index>=0) {
+            sections[index] = {...section};
         } else {
             throw new Error(`Section not found: ${section.id}`);
         }

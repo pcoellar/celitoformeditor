@@ -4,7 +4,7 @@ import F from '../../../../../assets/themes/fonts-styling';
 
 export const RootContainer = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   width: 100%;
   margin-bottom: 10px;
 `;
