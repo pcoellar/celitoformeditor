@@ -1,0 +1,12 @@
+export default { 
+  TITLE_COLOR: '#3c3c3c',
+  LABEL_COLOR: '#0c0c0c',
+  TEXT_COLOR: '#3c3c3c',
+  TEXT_HIGHLIGHT_COLOR: '#8792d7',
+  PRIMARY_BUTTON_BG: '#2d1c86',
+  PRIMARY_BUTTON_TEXT: '#ffffff',
+  SECONDARY_BUTTON_BG: '#fafafa',
+  SECONDARY_BUTTON_TEXT: '#8792d7',
+  SECTION_BG: '#f6f6f6',
+  SECTION_TEXT: '#666666',
+}
