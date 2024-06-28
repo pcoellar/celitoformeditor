@@ -2,8 +2,9 @@ import { Icon } from '@fluentui/react';
 import * as S from './styles';
 import { IProps } from './types';
 import ComboBoxField from '../../../shared/components/ComboBoxField';
+import { memo } from 'react';
 
-export default function EditorBodyElementInput(props: IProps) {
+const EditorBodyElementInput = (props: IProps) => {
     const optionsInput = [
         {text: 'Title', key: '1'}, 
         {text: 'Summary for changes', key: '2'}, 
@@ -19,3 +20,5 @@ export default function EditorBodyElementInput(props: IProps) {
         </S.RootContainer>
     )
 }
+
+export default memo(EditorBodyElementInput);

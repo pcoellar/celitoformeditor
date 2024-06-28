@@ -2,8 +2,9 @@ import { useContext } from "react";
 import { EditorContext } from "../../store/editor-context-provider"
 import EditorSection from "../editor-section";
 import * as S from './styles';
+import { memo } from "react";
 
-export default function EditorSections() {
+const EditorSections = () => {
     const editorContext = useContext(EditorContext);
     return (
         <S.RootContainer>
@@ -18,3 +19,5 @@ export default function EditorSections() {
         </S.RootContainer>
     )
 }
+
+export default memo(EditorSections);

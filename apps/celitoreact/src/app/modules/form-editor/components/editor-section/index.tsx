@@ -3,9 +3,10 @@ import * as S from './styles';
 import { Icon } from "@fluentui/react";
 import { useContext, useRef, useState } from "react";
 import { EditorContext } from "../../store/editor-context-provider";
+import { memo } from "react";
 
 
-export default function EditorSection(props: IProps) {
+const EditorSection = (props: IProps) => {
     const [text, setText] = useState<string|undefined>(props.title);
     const divRef = useRef<HTMLDivElement>(null);
     const editorContext = useContext(EditorContext);
@@ -38,3 +39,5 @@ export default function EditorSection(props: IProps) {
         </S.RootContainer>
     )
 }
+
+export default memo(EditorSection);

@@ -111,21 +111,21 @@ export default function(props: IEditorContextProviderProps) {
         const elementsToAdd: IElement[] = [
             {
                 id: uuidv4(),
-                sectionId: defaultEditorStatus.sections[0].id,
+                sectionId: sectionId,
                 positionOnRow: maxRowNum+1,
                 type: ElementTypes.Input,
                 size: 33,         
             },
             {
                 id: uuidv4(),
-                sectionId: defaultEditorStatus.sections[0].id,
+                sectionId: sectionId,
                 positionOnRow: maxRowNum+1,
                 type: ElementTypes.Input,
                 size: 33,         
             },
             {
                 id: uuidv4(),
-                sectionId: defaultEditorStatus.sections[0].id,
+                sectionId: sectionId,
                 positionOnRow: maxRowNum+1,
                 type: ElementTypes.Input,
                 size: 33,         
@@ -183,7 +183,6 @@ export default function(props: IEditorContextProviderProps) {
             AddElement,
             ChangeElement,
             DeleteElement,
-            GetRowSize,
             ShowHideSection,
         }}>
             {props.children}

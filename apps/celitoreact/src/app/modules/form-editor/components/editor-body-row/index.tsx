@@ -4,8 +4,9 @@ import { EditorContext } from "../../store/editor-context-provider";
 import { ElementTypes, IElement } from "../../store/editor-context-provider/types";
 import EditorBodyElementInput from "../editor-body-element-input";
 import * as S from "./styles";
+import { memo } from "react";
 
-export default function EditorBodyRow(props: IProps) {
+const EditorBodyRow = (props: IProps) => {
     const editorContext = useContext(EditorContext);
     const [rowElements, setRowElements] = useState<IElement[]|undefined>(undefined);
 
@@ -29,3 +30,4 @@ export default function EditorBodyRow(props: IProps) {
         </S.RootContainer>
     )
 }
+export default memo(EditorBodyRow);
