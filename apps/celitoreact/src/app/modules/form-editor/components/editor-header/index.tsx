@@ -9,6 +9,9 @@ import { useContext } from 'react';
 export default function EditorHeader() {
     const editorContext = useContext(EditorContext);
     const viewTypeOptions = [{key: 'Create', text: 'Create'}, {key: 'Edit', text: 'Edit'}, {key: 'View', text: 'View'}];
+    const hangleNameChange = (e: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        editorContext?.SetLayoutName(e.currentTarget.value);
+    }
     return (
         <S.RootContainer>
             <S.InputsContainer>
@@ -17,7 +20,7 @@ export default function EditorHeader() {
                         Label *
                     </S.Label>
                     <S.Input>
-                        <InputField />
+                        <InputField value={editorContext?.name} onChange={hangleNameChange} />
                     </S.Input>
                 </S.ColumnContainer>
                 <S.ColumnContainer>

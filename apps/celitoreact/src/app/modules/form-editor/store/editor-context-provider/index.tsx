@@ -138,10 +138,10 @@ export default function(props: IEditorContextProviderProps) {
         setElements([...elements,element]);
     }
 
-    const ChangeElement = (element: ISection) => {
-        let modElement: ISection|undefined = elements.find(x => x.id === element.id);
-        if (modElement) {
-            modElement = {...element};
+    const ChangeElement = (element: IElement) => {
+        let index = elements.findIndex(x => x.id === element.id);
+        if (index !== -1) {
+            elements[index] = {...element};
         } else {
             throw new Error(`Element not found: ${element.id}`);
         }

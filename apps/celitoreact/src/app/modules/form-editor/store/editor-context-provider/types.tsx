@@ -34,7 +34,7 @@ export interface IEditorContextProps {
     DeleteSection: (id: string) => void;
     AddRow: (sectionId: string) => void;
     AddElement: (element: IElement) => void;
-    ChangeElement: (element: ISection) => void;
+    ChangeElement: (element: IElement) => void;
     DeleteElement: (id: string) => void;
     ShowHideSection: (id: string) => void;
 }

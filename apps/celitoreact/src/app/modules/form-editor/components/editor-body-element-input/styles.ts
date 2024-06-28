@@ -13,12 +13,20 @@ export const RootContainer = styled.div`
   border-radius: 5px;
 `;
 
+export const ComboContainer = styled.div`
+  display: block;
+  width: 100%;
+`;
+
 export const Text = styled.div`
   ${F.ACTION_FONT};
   justify-content: center;
-  width: 90%;
+  width: 94%;
+  display: flex;
+  flex-direction: row;
 `;
 
-export const IconContainer = styled.div`
-  width: 35px;
-`;
+export const ContextMenu = styled.div`
+  display: flex;
+  display-direction: column
+`

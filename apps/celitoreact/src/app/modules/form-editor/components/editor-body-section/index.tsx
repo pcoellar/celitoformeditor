@@ -26,11 +26,13 @@ export default function EditorBodySection(props: IProps) {
             </S.SectionContainer>
             {
                 !props.section.hidden &&
-                <EditorBodyRows id={props.section.id}/>
+                <>
+                    <EditorBodyRows id={props.section.id}/>
+                    <S.AddRowContainer style={{cursor: "pointer"}} onClick={() => handleAddRow(props.section.id)}>
+                        + Add Row
+                    </S.AddRowContainer>
+                </>
             }
-            <S.AddRowContainer style={{cursor: "pointer"}} onClick={() => handleAddRow(props.section.id)}>
-                + Add Row
-            </S.AddRowContainer>
         </S.RootContainer>
     )
 }
