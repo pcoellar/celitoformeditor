@@ -10,14 +10,11 @@ export default function EditorBodyRow(props: IProps) {
     const [rowElements, setRowElements] = useState<IElement[]|undefined>(undefined);
 
     useEffect(() => {
-        console.log("row: " + props.row);
         const elements = editorContext?.elements.filter(x => x.sectionId === props.id && x.positionOnRow === props.row);
-        console.log("elements length: " + elements?.length);
         setRowElements(elements);
     },[editorContext?.elements, props.id, props.row]);
 
     return (
-        <>
         <S.RootContainer>{props.row}
         {
             rowElements?.map((element) => {
@@ -29,8 +26,6 @@ export default function EditorBodyRow(props: IProps) {
                 return <div></div>
             })
         }
-        </S.RootContainer>aa
-        <br />
-        </>    
+        </S.RootContainer>
     )
 }

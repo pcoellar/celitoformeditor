@@ -9,7 +9,3 @@ export const RootContainer = styled.div`
   margin-left: 15px;
 `;
 
-export const SectionContainer = styled.div`
-  width: 100%;
-  margin-bottom: 20px;
-`;

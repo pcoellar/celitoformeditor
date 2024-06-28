@@ -11,9 +11,7 @@ export default function EditorBody() {
             editorContext &&
             editorContext?.sections.map((section) => {
                 return (
-                    <S.SectionContainer>
-                        <EditorBodySection key={section.id} section={section} />
-                    </S.SectionContainer>
+                    <EditorBodySection key={section.id} section={section} />
                 )
             }) 
         }

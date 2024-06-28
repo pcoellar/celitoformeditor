@@ -26,7 +26,7 @@ export default function EditorBodyRows(props: IProps) {
         <S.RootContainer>
         {
             rowNumbers?.map((row) => {
-                return <EditorBodyRow key={row} id={props.id} row={row}/>
+                return <EditorBodyRow key={props.id + row} id={props.id} row={row}/>
             })
         }
         </S.RootContainer>        
