@@ -15,6 +15,14 @@ export default {
     font-style: normal;
     letter-spacing: normal
   `,
+  ERROR_FONT: `
+    font-family: Verdana;
+    font-size: 10px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    letter-spacing: normal
+  `,
   ACTION_FONT: `
     font-family: Verdana;
     font-size: 13px;

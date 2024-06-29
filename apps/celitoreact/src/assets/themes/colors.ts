@@ -9,4 +9,5 @@ export default {
   SECONDARY_BUTTON_TEXT: '#8792d7',
   SECTION_BG: '#f6f6f6',
   SECTION_TEXT: '#666666',
+  ERROR: '#FF0000',
 }

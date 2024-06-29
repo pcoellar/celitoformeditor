@@ -46,10 +46,10 @@ const EditorBodyElementInput = (props: IProps) => {
             iconProps: { iconName: 'SkypeMinus' },
             subMenuProps: {
                 items: [
-                  { key: 'small', text: 'Small' , onClick:()=>{editorContext?.ChangeElement({...props.element,size:33})}, disabled:rowSize+33>100},
-                  { key: 'medium', text: 'Medium' , onClick:()=>{editorContext?.ChangeElement({...props.element,size:50})}, disabled:rowSize+50>100},
-                  { key: 'large', text: 'Large' , onClick:()=>{editorContext?.ChangeElement({...props.element,size:66})}, disabled:rowSize+66>100},
-                  { key: 'extralarge', text: 'Extra Large' , onClick:()=>{editorContext?.ChangeElement({...props.element,size:99})}, disabled:rowSize+99>100},
+                  { key: 'small', text: 'Small' , onClick:()=>{editorContext?.ChangeElement({...props.element,size:33})}, disabled:rowSize+33>1000},
+                  { key: 'medium', text: 'Medium' , onClick:()=>{editorContext?.ChangeElement({...props.element,size:50})}, disabled:rowSize+50>1000},
+                  { key: 'large', text: 'Large' , onClick:()=>{editorContext?.ChangeElement({...props.element,size:66})}, disabled:rowSize+66>1000},
+                  { key: 'extralarge', text: 'Extra Large' , onClick:()=>{editorContext?.ChangeElement({...props.element,size:99})}, disabled:rowSize+99>1000},
                 ],
               },
             text: 'Field Width',
@@ -92,6 +92,10 @@ const EditorBodyElementInput = (props: IProps) => {
                 </S.ComboContainer>
                 <DefaultButton menuProps={menuProps} iconProps={{ iconName: 'More' }} styles={buttonStyles} />
             </S.Text>
+            {
+              props.element.errorMsg &&
+              <S.Error>{props.element.errorMsg}</S.Error>
+            }
         </S.RootContainer>
     )
 }

@@ -67,7 +67,7 @@ export default function(props: IEditorContextProviderProps) {
             },
         ];
         setElements([...elements, ...elementsToAdd]);
-    
+        ClearErrors();
     }
 
     const ChangeSection = (section: ISection) => {
@@ -78,6 +78,7 @@ export default function(props: IEditorContextProviderProps) {
             throw new Error(`Section not found: ${section.id}`);
         }
         setSections([...sections]);
+        ClearErrors();
     }
 
     const DeleteSection = (id: string) => {
@@ -88,6 +89,7 @@ export default function(props: IEditorContextProviderProps) {
             throw new Error(`Section not found: ${id}`);
         }
         setSections([...sections]);
+        ClearErrors();
     }
 
     const ShowHideSection = (id: string) => {
@@ -98,6 +100,7 @@ export default function(props: IEditorContextProviderProps) {
             throw new Error(`Section not found: ${id}`);
         }
         setSections([...sections]);
+        ClearErrors();
     }
 
     const AddRow = (sectionId: string) => {
@@ -132,23 +135,27 @@ export default function(props: IEditorContextProviderProps) {
             },
         ];
         setElements([...elements, ...elementsToAdd]);  
+        ClearErrors();
     }
 
     const AddElement = (element: IElement) => {
         setElements([...elements,element]);
+        ClearErrors();
     }
 
     const ChangeElement = (element: IElement) => {
-        let index = elements.findIndex(x => x.id === element.id);
+        const index = elements.findIndex(x => x.id === element.id);
         if (index !== -1) {
             elements[index] = {...element};
         } else {
             throw new Error(`Element not found: ${element.id}`);
         }
         setElements([...elements]);
+        ClearErrors();
     }
 
     const DeleteElement = (id: string) => {
+        console.log("elements1: ", elements);
         const index = elements.findIndex(x => x.id === id);
         if (index !== -1) {
             elements.splice(index, 1);
@@ -156,16 +163,36 @@ export default function(props: IEditorContextProviderProps) {
             throw new Error(`Element not found: ${id}`);
         }
         setElements([...elements]);
+        ClearErrors();
     }
 
-    const GetRowSize = (id: string): number => {
-        let total = 0;
-        for(let i=0; i<elements.length; i++) {
-            if (elements[i].sectionId === id) {
-                total += elements[i].size;
+    const ValidateForm = (): boolean => {
+        let result = true;
+        for(let i=0;i<elements.length;i++) {
+            if (elements[i].type === ElementTypes.Input) {
+                if (!(elements[i] as IElementInput).textOption) {
+                    elements[i].errorMsg = "Field is required";
+                    result = false;
+                }
             }
         }
-        return total;
+        for(let i=0;i<sections.length;i++) {
+            if (!sections[i].title) {
+                sections[i].errorMsg = "Field is required";
+                result = false;
+            }
+        }
+        setElements([...elements]);
+        return result;
+    }
+
+    const ClearErrors = () => {
+        for(let i=0;i<elements.length;i++) {
+            elements[i].errorMsg = "";
+        }
+        for(let i=0;i<sections.length;i++) {
+            sections[i].errorMsg = "";
+        }
     }
 
     return (
@@ -184,6 +211,7 @@ export default function(props: IEditorContextProviderProps) {
             ChangeElement,
             DeleteElement,
             ShowHideSection,
+            ValidateForm,
         }}>
             {props.children}
         </EditorContext.Provider>

@@ -4,7 +4,7 @@ import F from '../../../../../assets/themes/fonts-styling';
 
 export const RootContainer = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   height: 30px;
   width: 100%;
   align-items: center;
@@ -29,4 +29,12 @@ export const Text = styled.div`
 export const ContextMenu = styled.div`
   display: flex;
   display-direction: column
+`
+
+export const Error = styled.div`
+ ${F.ERROR_FONT}:
+ color: ${C.ERROR};
+ width: 100%;
+ justify-content: left;
+ margin-left: 30px;
 `
