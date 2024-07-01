@@ -26,15 +26,19 @@ export const Text = styled.div`
   flex-direction: row;
 `;
 
-export const ContextMenu = styled.div`
-  display: flex;
-  display-direction: column
-`
-
 export const Error = styled.div`
  ${F.ERROR_FONT}:
  color: ${C.ERROR};
  width: 100%;
  justify-content: left;
  margin-left: 30px;
+`
+
+export const IconContainer = styled.div`
+  display: flex;
+  cursor: pointer;
+  border: 1px solid #666666;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
 `

@@ -155,7 +155,6 @@ export default function(props: IEditorContextProviderProps) {
     }
 
     const DeleteElement = (id: string) => {
-        console.log("elements1: ", elements);
         const index = elements.findIndex(x => x.id === id);
         if (index !== -1) {
             elements.splice(index, 1);

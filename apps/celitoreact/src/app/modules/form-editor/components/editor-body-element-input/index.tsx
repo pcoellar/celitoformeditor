@@ -1,15 +1,15 @@
-import { DefaultButton, Icon } from '@fluentui/react';
+import { Icon } from '@fluentui/react';
 import * as S from './styles';
 import { IProps } from './types';
 import ComboBoxField from '../../../shared/components/ComboBoxField';
 import { memo, useContext, useEffect, useState } from 'react';
-import { useConst } from '@fluentui/react-hooks';
-import { ContextualMenuItemType, IContextualMenuProps } from '@fluentui/react/lib/ContextualMenu';
 import { EditorContext } from '../../store/editor-context-provider';
+import ContextMenu from '../../../shared/components/ContextMenu';
 
 const EditorBodyElementInput = (props: IProps) => {
     const editorContext = useContext(EditorContext);
-    const [rowSize,setRowSize] = useState(100);
+    const [rowSize,setRowSize] = useState(99);
+    const [openContextMenu, setOpenContextMenu] = useState(false);
 
     useEffect(() => {
         const elements = editorContext?.elements.filter((x) => x.sectionId===props.element.sectionId && x.positionOnRow===props.element.positionOnRow);
@@ -32,66 +32,70 @@ const EditorBodyElementInput = (props: IProps) => {
     const handleDelete = (id: string) => {
         editorContext?.DeleteElement(id);
     }
-    const menuProps = useConst<IContextualMenuProps>(() => ({
-        shouldFocusOnMount: true,
-        items: [
-          {
-            key: 'title',
-            iconProps: { iconName: 'Web Components' },
-            itemType: ContextualMenuItemType.Header,
-            text: 'Set Layout Rules',
-          },
-          {
-            key: 'width',
-            iconProps: { iconName: 'SkypeMinus' },
-            subMenuProps: {
-                items: [
-                  { key: 'small', text: 'Small' , onClick:()=>{editorContext?.ChangeElement({...props.element,size:33})}, disabled:rowSize+33>1000},
-                  { key: 'medium', text: 'Medium' , onClick:()=>{editorContext?.ChangeElement({...props.element,size:50})}, disabled:rowSize+50>1000},
-                  { key: 'large', text: 'Large' , onClick:()=>{editorContext?.ChangeElement({...props.element,size:66})}, disabled:rowSize+66>1000},
-                  { key: 'extralarge', text: 'Extra Large' , onClick:()=>{editorContext?.ChangeElement({...props.element,size:99})}, disabled:rowSize+99>1000},
-                ],
-              },
-            text: 'Field Width',
-          },
-          {
-            key: 'edit',
-            iconProps: { iconName: 'OpenEnrollment' },
-            text: 'Edit Field',
-          },
-          {
-            key: 'delete',
-            iconProps: { iconName: 'Trash' },
-            text: 'Delete',
-            onClick: () => {
-                handleDelete(props.element.id)
-            } 
-          },
-        ],
-      }));
-      const buttonStyles = {
-        root: {
-          maxWidth: '20px',
-          minWidth: '20px',
-          width: '20px',
-          paddingRight: '24px', // Adjust padding to accommodate the icon space
-          selectors: {
-            '.ms-Button-menuIcon': {
-              // Hide the arrow icon
-              display: 'none',
-            },
-          },
-        },
-      };
-    
     return (
         <S.RootContainer style={{width: `${props.element.size}%`}}>
             <S.Text>
                 <S.ComboContainer>
                     <ComboBoxField options={optionsInput} placeholder='+ Add Input' />
                 </S.ComboContainer>
-                <DefaultButton menuProps={menuProps} iconProps={{ iconName: 'More' }} styles={buttonStyles} />
-            </S.Text>
+                <S.IconContainer onClick={() => setOpenContextMenu(!openContextMenu)}>
+                  <Icon iconName='More'/>
+                </S.IconContainer>
+                {
+                  openContextMenu && 
+                  <ContextMenu items={
+                    [
+                      {
+                        text: 'Set Layout Rules',
+                        header: true,
+                      },
+                      {
+                        iconName: 'SkypeMinus',
+                        text: 'Field Width',
+                        itemsSubmenu: [
+                          {
+                            text: 'Small' , 
+                            onClick:()=>{editorContext?.ChangeElement({...props.element,size:33})}, 
+                            disabled:rowSize+33-props.element.size>100,
+                            selected:props.element.size===33,
+                          },
+                          {
+                            text: 'Medium' , 
+                            onClick:()=>{editorContext?.ChangeElement({...props.element,size:50})}, 
+                            disabled:rowSize+50-props.element.size>100,
+                            selected:props.element.size===50,
+                          },
+                          {
+                            text: 'Large' , 
+                            onClick:()=>{editorContext?.ChangeElement({...props.element,size:66})}, 
+                            disabled:rowSize+66-props.element.size>100,
+                            selected:props.element.size===66,
+                          },
+                          {
+                            text: 'Extra Large' , 
+                            onClick:()=>{editorContext?.ChangeElement({...props.element,size:99})}, 
+                            disabled:rowSize+99-props.element.size>100,
+                            selected:props.element.size===99,
+                          },
+                        ]
+                      },
+                      {
+                        iconName: 'OpenEnrollment',
+                        text: 'Edit Field',
+                      },
+                      {
+                        iconName: 'Trash',
+                        text: 'Delete',
+                        onClick: () => {
+                            handleDelete(props.element.id)
+                        } 
+                      },
+                    ]
+                    }
+                    closeFunction={() => setOpenContextMenu(false)}
+                  />
+                }
+            </S.Text>            
             {
               props.element.errorMsg &&
               <S.Error>{props.element.errorMsg}</S.Error>

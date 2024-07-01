@@ -10,4 +10,7 @@ export default {
   SECTION_BG: '#f6f6f6',
   SECTION_TEXT: '#666666',
   ERROR: '#FF0000',
+  MENU_HOVER_BG: '#f8f6fd',
+  MENU_TEXT: '#3c3c3c',
+  MENU_DISABLED_TEXT: '#cccccc',
 }
