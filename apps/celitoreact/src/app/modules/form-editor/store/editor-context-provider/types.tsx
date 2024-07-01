@@ -11,7 +11,7 @@ export interface IElementInput extends IElement {
 export interface IElement {
     id: string;
     sectionId: string;
-    positionOnRow: number;
+    row: number;
     type: 'input' //in the future could support different elements (images, dropdown, radio buttons, check, etc)
     size: number;
     errorMsg?: string;

@@ -19,21 +19,21 @@ export default function(props: IEditorContextProviderProps) {
         {
             id: uuidv4(),
             sectionId: defaultEditorStatus.sections[0].id,
-            positionOnRow: 1,
+            row: 1,
             type: ElementTypes.Input,
             size: 33,         
         },
         {
             id: uuidv4(),
             sectionId: defaultEditorStatus.sections[0].id,
-            positionOnRow: 1,
+            row: 1,
             type: ElementTypes.Input,
             size: 33,         
         },
         {
             id: uuidv4(),
             sectionId: defaultEditorStatus.sections[0].id,
-            positionOnRow: 1,
+            row: 1,
             type: ElementTypes.Input,
             size: 33,         
         },
@@ -47,21 +47,21 @@ export default function(props: IEditorContextProviderProps) {
             {
                 id: uuidv4(),
                 sectionId: newSection.id,
-                positionOnRow: 1,
+                row: 1,
                 type: ElementTypes.Input,
                 size: 33,         
             },
             {
                 id: uuidv4(),
                 sectionId: newSection.id,
-                positionOnRow: 1,
+                row: 1,
                 type: ElementTypes.Input,
                 size: 33,         
             },
             {
                 id: uuidv4(),
                 sectionId: newSection.id,
-                positionOnRow: 1,
+                row: 1,
                 type: ElementTypes.Input,
                 size: 33,         
             },
@@ -107,29 +107,29 @@ export default function(props: IEditorContextProviderProps) {
         const elementsOnSection: IElement[] = elements.filter((x) => x.sectionId === sectionId);
         let maxRowNum = 0;
         for(let i=0;i<elementsOnSection.length;i++) {
-            if (elementsOnSection[i].positionOnRow>maxRowNum) {
-                maxRowNum = elementsOnSection[i].positionOnRow;
+            if (elementsOnSection[i].row>maxRowNum) {
+                maxRowNum = elementsOnSection[i].row;
             }
         }
         const elementsToAdd: IElement[] = [
             {
                 id: uuidv4(),
                 sectionId: sectionId,
-                positionOnRow: maxRowNum+1,
+                row: maxRowNum+1,
                 type: ElementTypes.Input,
                 size: 33,         
             },
             {
                 id: uuidv4(),
                 sectionId: sectionId,
-                positionOnRow: maxRowNum+1,
+                row: maxRowNum+1,
                 type: ElementTypes.Input,
                 size: 33,         
             },
             {
                 id: uuidv4(),
                 sectionId: sectionId,
-                positionOnRow: maxRowNum+1,
+                row: maxRowNum+1,
                 type: ElementTypes.Input,
                 size: 33,         
             },
@@ -169,14 +169,14 @@ export default function(props: IEditorContextProviderProps) {
         let result = true;
         for(let i=0;i<elements.length;i++) {
             if (elements[i].type === ElementTypes.Input) {
-                if (!(elements[i] as IElementInput).textOption) {
+                if (!((elements[i] as IElementInput).textOption)) {
                     elements[i].errorMsg = "Field is required";
                     result = false;
                 }
             }
         }
         for(let i=0;i<sections.length;i++) {
-            if (!sections[i].title) {
+            if (!(sections[i].title)) {
                 sections[i].errorMsg = "Field is required";
                 result = false;
             }

@@ -12,7 +12,7 @@ const EditorBodyElementInput = (props: IProps) => {
     const [openContextMenu, setOpenContextMenu] = useState(false);
 
     useEffect(() => {
-        const elements = editorContext?.elements.filter((x) => x.sectionId===props.element.sectionId && x.positionOnRow===props.element.positionOnRow);
+        const elements = editorContext?.elements.filter((x) => x.sectionId===props.element.sectionId && x.row===props.element.row);
         let total=0;
         if (elements) {
             for(let i=0;i<elements?.length;i++) {
@@ -20,7 +20,7 @@ const EditorBodyElementInput = (props: IProps) => {
             }
         }
         setRowSize(total);
-    },[editorContext?.elements,editorContext?.elements.length,props.element.positionOnRow,props.element.sectionId]);
+    },[editorContext?.elements,editorContext?.elements.length,props.element.row,props.element.sectionId]);
 
     const optionsInput = [
         {text: 'Title', key: '1'}, 

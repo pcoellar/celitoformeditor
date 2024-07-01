@@ -8,3 +8,14 @@ export const RootContainer = styled.div`
   width: 100%;
   margin-bottom: 10px;
 `;
+
+export const AddColumnContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: ${C.TEXT_HIGHLIGHT_COLOR};
+  ${F.ACTION_FONT};
+  margin-left: 20px;
+  height: 30px;
+`;

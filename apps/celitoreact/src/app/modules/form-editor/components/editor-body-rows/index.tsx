@@ -11,8 +11,8 @@ const EditorBodyRows = (props: IProps) => {
     const elements = editorContext?.elements.filter(x => x.sectionId === props.id);
     if (elements) {
         for(let i=0;i<elements?.length;i++) {
-            if (!rows.includes(elements[i].positionOnRow)) {
-                rows.push(elements[i].positionOnRow);
+            if (!rows.includes(elements[i].row)) {
+                rows.push(elements[i].row);
             }
         }
     }
