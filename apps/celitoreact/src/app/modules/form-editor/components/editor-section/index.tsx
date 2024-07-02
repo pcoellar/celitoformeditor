@@ -22,7 +22,7 @@ const EditorSection = (props: IProps) => {
             }
         }
         else {
-            editorContext?.ChangeSection({...props.section, title: newText});
+            editorContext?.EditSection({...props.section, title: newText});
         }
     };
 

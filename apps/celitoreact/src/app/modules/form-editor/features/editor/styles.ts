@@ -15,3 +15,10 @@ export const BodyContainer = styled.div`
   width: 100%;
   height: 100%;
 `;
+
+export const LeftContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 450px;
+  height: 100%;
+`;

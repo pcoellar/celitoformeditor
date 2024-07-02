@@ -32,9 +32,15 @@ export default function EditorHeader() {
                     </S.Input>
                 </S.ColumnContainer>
             </S.InputsContainer>
-            <S.SectionsContainer>
-                <CheckboxField label="Show Sections" checked={editorContext?.showSections} onChange={() => editorContext?.ShowSections(!editorContext?.showSections)}/>
-            </S.SectionsContainer>
+            <S.ChecksContainer>
+                <S.SectionsContainer>
+                    <CheckboxField label="Show Sections" checked={editorContext?.showSections} onChange={() => editorContext?.ShowSections(!editorContext?.showSections)}/>
+                </S.SectionsContainer>
+                <S.Spacer/>
+                <S.SectionsContainer>
+                    <CheckboxField label="Show Logger" checked={editorContext?.showLogger} onChange={() => editorContext?.ShowLogger(!editorContext?.showLogger)}/>
+                </S.SectionsContainer>
+            </S.ChecksContainer>
         </S.RootContainer>
     )
 }

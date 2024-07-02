@@ -17,6 +17,16 @@ export const InputsContainer = styled.div`
   height: 80px;
 `;
 
+export const ChecksContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+`;
+
+export const Spacer = styled.div`
+  width: 20px;
+`;
+
 export const ColumnContainer = styled.div`
   display: flex;
   flex-direction: column;

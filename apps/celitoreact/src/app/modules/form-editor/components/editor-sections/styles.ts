@@ -3,17 +3,18 @@ import C from '../../../../../assets/themes/colors';
 import F from '../../../../../assets/themes/fonts-styling';
 
 export const RootContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 450px;
-  height: 100%;
+  display: block;
+  width: 90%;
+  height: 500px;
   margin-left: 15px;
+  overflow-y: auto;
+  overflow-x: hidden;
 `;
 
 export const AddSectionContainer = styled.div`
   display: flex;
   flex-direction: row;
-  width: 100%;
+  width: 99%;
   height: 45px;
   align-items: center;
   justify-content: center;

@@ -1,10 +1,11 @@
-import { Icon } from '@fluentui/react';
+import { IComboBoxProps, Icon } from '@fluentui/react';
 import * as S from './styles';
 import { IProps } from './types';
 import ComboBoxField from '../../../shared/components/ComboBoxField';
 import { memo, useContext, useEffect, useState } from 'react';
 import { EditorContext } from '../../store/editor-context-provider';
 import ContextMenu from '../../../shared/components/ContextMenu';
+import { IElementInput } from '../../store/editor-context-provider/types';
 
 const EditorBodyElementInput = (props: IProps) => {
     const editorContext = useContext(EditorContext);
@@ -29,14 +30,20 @@ const EditorBodyElementInput = (props: IProps) => {
         {text: 'Follow up comment', key: '4'},
         {text: 'Check in comment', key: '5'},
     ];
+
     const handleDelete = (id: string) => {
         editorContext?.DeleteElement(id);
     }
+
+    const handleComboOnChange: IComboBoxProps['onChange'] = (event, option) => {
+      editorContext?.EditElement({...props.element,textOption:option?.key as string} as IElementInput);
+    }
+
     return (
         <S.RootContainer style={{width: `${props.element.size}%`}}>
             <S.Text>
                 <S.ComboContainer>
-                    <ComboBoxField options={optionsInput} placeholder='+ Add Input' />
+                    <ComboBoxField options={optionsInput} placeholder='+ Add Input' onChange={handleComboOnChange} />
                 </S.ComboContainer>
                 <S.IconContainer onClick={() => setOpenContextMenu(!openContextMenu)}>
                   <Icon iconName='More'/>
@@ -55,25 +62,25 @@ const EditorBodyElementInput = (props: IProps) => {
                         itemsSubmenu: [
                           {
                             text: 'Small' , 
-                            onClick:()=>{editorContext?.ChangeElement({...props.element,size:33})}, 
+                            onClick:()=>{editorContext?.EditElement({...props.element,size:33})}, 
                             disabled:rowSize+33-props.element.size>100,
                             selected:props.element.size===33,
                           },
                           {
                             text: 'Medium' , 
-                            onClick:()=>{editorContext?.ChangeElement({...props.element,size:50})}, 
+                            onClick:()=>{editorContext?.EditElement({...props.element,size:50})}, 
                             disabled:rowSize+50-props.element.size>100,
                             selected:props.element.size===50,
                           },
                           {
                             text: 'Large' , 
-                            onClick:()=>{editorContext?.ChangeElement({...props.element,size:66})}, 
+                            onClick:()=>{editorContext?.EditElement({...props.element,size:66})}, 
                             disabled:rowSize+66-props.element.size>100,
                             selected:props.element.size===66,
                           },
                           {
                             text: 'Extra Large' , 
-                            onClick:()=>{editorContext?.ChangeElement({...props.element,size:99})}, 
+                            onClick:()=>{editorContext?.EditElement({...props.element,size:99})}, 
                             disabled:rowSize+99-props.element.size>100,
                             selected:props.element.size===99,
                           },

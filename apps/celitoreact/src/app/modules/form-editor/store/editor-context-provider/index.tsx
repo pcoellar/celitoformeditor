@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { ISection, IEditorContextProps, IElement, IEditorContextProviderProps, IElementInput, ElementTypes} from './types';
+import { ISection, IEditorContextProps, IElement, IEditorContextProviderProps, IElementInput, ElementTypes, EditorEventTypes, IEventData, IEventInfo, ISusbscribe} from './types';
 import { v4 as uuidv4 } from 'uuid';
 
 const defaultEditorStatus = {
     name: "",
     showSections: false,
     sections: [{id: uuidv4(), hidden: false}],
+    showLogger: false,
 };
 
 export const EditorContext = React.createContext<IEditorContextProps|undefined>(undefined);
@@ -14,7 +15,9 @@ export const EditorContext = React.createContext<IEditorContextProps|undefined>(
 export default function(props: IEditorContextProviderProps) {
     const [name,setName] = useState(defaultEditorStatus.name);
     const [showSections,setShowSections] = useState(defaultEditorStatus.showSections);
+    const [showLogger,setShowLogger] = useState(defaultEditorStatus.showLogger);
     const [sections,setSections] = useState<ISection[]>(defaultEditorStatus.sections);
+    const [eventsSubscribers, setEventsSubscribers] = useState<ISusbscribe[]>([]);
     const defaultElements: IElement[] = [
         {
             id: uuidv4(),
@@ -40,8 +43,25 @@ export default function(props: IEditorContextProviderProps) {
     ];
     const [elements,setElements] = useState<IElement[]>(defaultElements);
 
+    const Subscribe = (subscribers: ISusbscribe[]) => {
+        setEventsSubscribers([...eventsSubscribers, ...subscribers]);
+    } 
+
+    const Unsubscribe = (unSubscribers: ISusbscribe[]) => {
+        setEventsSubscribers(eventsSubscribers.filter(subscriber => { unSubscribers.forEach(unSubscriber => { if (unSubscriber.eventName === subscriber.eventName && unSubscriber.callback === subscriber.callback) return false}); return true;}));
+    }
+      
+    const Publish = (eventName: EditorEventTypes, data: IEventData) => {
+        eventsSubscribers.forEach(subscriber => {
+            if (subscriber.eventName === eventName) {
+                subscriber.callback({eventName: eventName, timestamp: new Date(), detail: data});
+            }
+        });
+    }
+
     const AddSection = () => {
         const newSection: ISection = {id: uuidv4(), hidden: false};
+        Publish(EditorEventTypes.OnAddSection, {data: {newSectionData: newSection}});
         setSections([...sections, newSection]);
         const elementsToAdd: IElement[] = [
             {
@@ -66,13 +86,17 @@ export default function(props: IEditorContextProviderProps) {
                 size: 33,         
             },
         ];
-        setElements([...elements, ...elementsToAdd]);
+        for(let i=0;i<elementsToAdd.length;i++) {
+            Publish(EditorEventTypes.OnAddElement, {data: {newElementData: elementsToAdd[i]}});
+        }
+        setElements([...elements,...elementsToAdd]);
         ClearErrors();
     }
 
-    const ChangeSection = (section: ISection) => {
+    const EditSection = (section: ISection) => {
         const index = sections.findIndex(x => x.id === section.id);
         if (index>=0) {
+            Publish(EditorEventTypes.OnEditSection, {data: {oldSectionData: sections[index], newSectionData: section}});
             sections[index] = {...section};
         } else {
             throw new Error(`Section not found: ${section.id}`);
@@ -82,8 +106,15 @@ export default function(props: IEditorContextProviderProps) {
     }
 
     const DeleteSection = (id: string) => {
+        const elementsRemoved = elements.filter(x => x.sectionId === id);
+        for(let i=0;i<elementsRemoved.length;i++) {
+            Publish(EditorEventTypes.OnDeleteElement, {data: {deletedElementData: elementsRemoved[i]}});
+        }
+        const elementsFiltered = elements.filter(x => x.sectionId !== id);
+        setElements([...elementsFiltered]);
         const index = sections.findIndex(x => x.id === id);
         if (index !== -1) {
+            Publish(EditorEventTypes.OnDeleteSection, {data: {deletedSectionData: sections[index]}});
             sections.splice(index, 1);
         } else {
             throw new Error(`Section not found: ${id}`);
@@ -111,6 +142,7 @@ export default function(props: IEditorContextProviderProps) {
                 maxRowNum = elementsOnSection[i].row;
             }
         }
+        Publish(EditorEventTypes.OnAddRow, {data: {sectionId: sectionId, row: maxRowNum + 1}});
         const elementsToAdd: IElement[] = [
             {
                 id: uuidv4(),
@@ -134,18 +166,23 @@ export default function(props: IEditorContextProviderProps) {
                 size: 33,         
             },
         ];
-        setElements([...elements, ...elementsToAdd]);  
+        for(let i=0;i<elementsToAdd.length;i++) {
+            Publish(EditorEventTypes.OnAddElement, {data: {newElementData: elementsToAdd[i]}});
+        }
+        setElements([...elements,...elementsToAdd]);
         ClearErrors();
     }
 
     const AddElement = (element: IElement) => {
+        Publish(EditorEventTypes.OnAddElement, {data: {newElementData: element}});
         setElements([...elements,element]);
         ClearErrors();
     }
 
-    const ChangeElement = (element: IElement) => {
+    const EditElement = (element: IElement) => {
         const index = elements.findIndex(x => x.id === element.id);
         if (index !== -1) {
+            Publish(EditorEventTypes.OnEditElement, {data: {oldElementData: elements[index], newElementData: element}});
             elements[index] = {...element};
         } else {
             throw new Error(`Element not found: ${element.id}`);
@@ -157,6 +194,7 @@ export default function(props: IEditorContextProviderProps) {
     const DeleteElement = (id: string) => {
         const index = elements.findIndex(x => x.id === id);
         if (index !== -1) {
+            Publish(EditorEventTypes.OnDeleteElement, {data: {deletedElementData: elements[index]}});
             elements.splice(index, 1);
         } else {
             throw new Error(`Element not found: ${id}`);
@@ -200,17 +238,21 @@ export default function(props: IEditorContextProviderProps) {
             SetLayoutName: setName,
             showSections,
             ShowSections: setShowSections,
+            showLogger,
+            ShowLogger: setShowLogger,
             sections,
             elements,
             AddSection,
-            ChangeSection,
+            EditSection,
             DeleteSection,
             AddRow,
             AddElement,
-            ChangeElement,
+            EditElement,
             DeleteElement,
             ShowHideSection,
             ValidateForm,
+            Subscribe,
+            Unsubscribe,
         }}>
             {props.children}
         </EditorContext.Provider>

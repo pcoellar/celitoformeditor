@@ -1,4 +1,4 @@
-import { ComboBox, Icon } from '@fluentui/react';
+import { ComboBox } from '@fluentui/react';
 import { IProps } from './types';
 
 export default function ComboBoxField (props: IProps) {

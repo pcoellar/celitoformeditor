@@ -55,6 +55,14 @@ export default {
     font-style: normal;
     letter-spacing: normal
   `,
+  STRONG_FONT: `
+    font-family: Verdana;
+    font-size: 12px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    letter-spacing: normal
+  `,
   SUBTITLE_FONT: `
     font-family: Verdana;
     font-size: 13px;
