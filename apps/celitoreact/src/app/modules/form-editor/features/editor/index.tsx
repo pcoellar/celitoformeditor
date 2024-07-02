@@ -12,13 +12,16 @@ export default function Editor() {
         <S.RootContainer>
             <EditorHeader />
             <S.BodyContainer>
-                <S.LeftContainer>
                 {
-                    editorContext?.showSections &&
-                    <EditorSections />
+                    (editorContext?.showSections || editorContext?.showLogger) &&
+                    <S.LeftContainer>
+                    {
+                        editorContext?.showSections &&
+                        <EditorSections />
+                    }
+                    <EditorEventLogger />
+                    </S.LeftContainer>
                 }
-                <EditorEventLogger />
-                </S.LeftContainer>
                 <EditorBody />
             </S.BodyContainer>
         </S.RootContainer>
